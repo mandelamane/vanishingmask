@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, request, send_from_directory
 
 from .mask2face import generate_face
 
@@ -7,7 +7,12 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    return send_from_directory("./static", "index.html")
+
+
+@app.route("/<path:name>")
+def download_file(name):
+    return send_from_directory("./static", name)
 
 
 @app.route("/upload", methods=["POST"])

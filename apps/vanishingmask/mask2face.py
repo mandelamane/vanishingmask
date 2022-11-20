@@ -5,7 +5,7 @@ import numpy as np
 from PIL import Image
 from tensorflow import keras
 
-from .model.utils import ReflectionPadding2D
+from .cyclegan.utils import ReflectionPadding2D
 
 
 def binary2array(img_binary):
@@ -31,11 +31,18 @@ def generate_face(img_binary, img_size=(200, 200)):
     img_normalized = img_normalized[np.newaxis, :, :, :]
 
     model = keras.models.load_model(
-        "apps/vanishingmask/checkpoints/mask2face_295.h5",
+        "apps/vanishingmask/checkpoints/mask2face_2.h5",
         custom_objects={"ReflectionPadding2D": ReflectionPadding2D},
     )
 
+    model.summary()
+
     gen_face_array = model(img_normalized, training=False)[0].numpy()
+    gen_face_array_resize = cv2.resize(gen_face_array, (height, height))
+    gen_face_array = np.append(
+        np.ones((height, cut_index1, 3)), gen_face_array_resize, axis=1
+    )
+    gen_face_array = np.append(gen_face_array, np.ones((height, cut_index1, 3)), axis=1)
 
     img_buffer = io.BytesIO()
     face_img = (gen_face_array * 127.5 + 127.5).astype(np.uint8)
