@@ -1,6 +1,13 @@
 # vanishingmask
 
-## run
-pip install -r requirements.txt
+## setup
+初回のみ、フロントエンド部のスクリプトおよび実行に必要なライブラリをインストールする。
+'''
+bash setup.sh
+'''
 
-flask run
+## run
+起動する場合は、下記のコマンドをターミナルで実行する。
+'''
+bash run.sh
+'''

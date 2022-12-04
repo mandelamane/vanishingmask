@@ -1,4 +1,4 @@
-/.mypy_cache
-/apps/vanishingmask/__pycache__
-/apps/vanishingmask/model/__pycache__
+static
+.mypy_cache
+__pycache__
 .DS_Store

@@ -2,10 +2,31 @@ import io
 
 import cv2
 import numpy as np
+import tensorflow as tf
+import tensorflow_addons as tfa
 from PIL import Image
 from tensorflow import keras
 
-from .cyclegan.utils import ReflectionPadding2D
+
+class ReflectionPadding2D(keras.layers.Layer):
+    def __init__(self, padding=(1, 1), **kwargs):
+        self.padding = tuple(padding)
+        super(ReflectionPadding2D, self).__init__(**kwargs)
+
+    def call(self, input_tensor, mask=None):
+        padding_width, padding_height = self.padding
+        padding_tensor = [
+            [0, 0],
+            [padding_height, padding_height],
+            [padding_width, padding_width],
+            [0, 0],
+        ]
+        return tf.pad(input_tensor, padding_tensor, mode="REFLECT")
+
+    def get_config(self):
+        config = {"padding": self.padding}
+        base_config = super(ReflectionPadding2D, self).get_config()
+        return dict(list(base_config.items()) + list(config.items()))
 
 
 def binary2array(img_binary):
@@ -15,7 +36,7 @@ def binary2array(img_binary):
     return img_array
 
 
-def generate_face(img_binary, img_size=(200, 200)):
+def generate_face(img_binary, img_size=(256, 256)):
     img_array = binary2array(img_binary)
 
     img_shape = img_array.shape
@@ -27,15 +48,13 @@ def generate_face(img_binary, img_size=(200, 200)):
     img_array = img_array[:, cut_index1:cut_index2]
     img_resized = cv2.resize(img_array, img_size)
 
-    img_normalized = (img_resized.astype(np.float32) / 127.5) - 1.0
+    img_normalized = (img_resized.astype(np.float32) / 127.5) - 0.5
     img_normalized = img_normalized[np.newaxis, :, :, :]
 
     model = keras.models.load_model(
-        "apps/vanishingmask/checkpoints/mask2face_2.h5",
+        "apps/vanishingmask/models/mask2face_62.h5",
         custom_objects={"ReflectionPadding2D": ReflectionPadding2D},
     )
-
-    model.summary()
 
     gen_face_array = model(img_normalized, training=False)[0].numpy()
     gen_face_array_resize = cv2.resize(gen_face_array, (height, height))
