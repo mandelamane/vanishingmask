@@ -1,10 +1,22 @@
 # vanishingmask
 
+This program is developed on macOS.
+
 ## setup
-初回のみ、フロントエンド部のスクリプトおよび実行に必要なライブラリをインストールする。
+Create virtual environment by
+
 ```
-bash setup.sh
+python3 -m venv env
+. ./env/bin/activate
 ```
+
+and install dependent packages by
+
+```
+pip install -r requirements.txt
+```
+
+
 
 ## run
 起動する場合は、下記のコマンドをターミナルで実行する。
