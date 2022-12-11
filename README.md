@@ -13,8 +13,9 @@ python3 -m venv env
 and install dependent packages by
 
 ```
-pip install -r requirements.txt
+pip install -r requirements_darwin.txt
 ```
+if it runs on macOS.
 
 
 
