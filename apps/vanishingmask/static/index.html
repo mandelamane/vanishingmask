@@ -5,8 +5,7 @@
     <title>WebRTC: Still photo capture demo</title>
     <meta charset='utf-8'>
     <link rel="stylesheet" href="static/main.css" type="text/css" media="all">
-    <script src="static/capture.js">
-    </script>
+    <script type="module">import "./capture.js";</script>
 </head>
 
 <body>
@@ -24,10 +23,6 @@
             <div class="mirror">
                 <img id="photo" alt="The screen capture will appear in this box.">
             </div>
-            <div class="mirror">
-                <img id="result">
-            </div>
-            <img id="magicmirror" src="static/magicmirror.png">
             <canvas id="canvas"></canvas>
         </div>
         <button id="startbutton">Take photo</button>
