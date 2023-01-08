@@ -1,4 +1,5 @@
 .mypy_cache
 __pycache__
 .DS_Store
-env
+/env
+/apps/vanishingmask/models/*
