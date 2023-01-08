@@ -1,6 +1,5 @@
 .mypy_cache
 __pycache__
 .DS_Store
-env
-apps/vanishingmask/models/mask2face_62.h5
-apps/vanishingmask/models/mask2face_mega.h5
+/env
+/apps/vanishingmask/models/*
