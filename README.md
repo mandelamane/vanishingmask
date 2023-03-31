@@ -25,7 +25,8 @@ if it runs on macOS.
 
 
 ## run
-起動する場合は、下記のコマンドをターミナルで実行する。
+To start, execute the following command in a terminal.
+
 ```
 bash run.sh
 ```
